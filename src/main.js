@@ -10,8 +10,12 @@ const router = new VueRouter({
   routes
 })
 
+// Vuex
+import store from './store/store'
+
 new Vue({
   el: '#app',
   router,
+  store,
   render: h => h(App)
 })

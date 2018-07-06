@@ -10,19 +10,26 @@
 
             <div class="panel-body">
                 <div class="pull-left">
-                    <input type="number" class="form-control" placeholder="Quantity" v-model="quantity">
+                    <input type="number" class="form-control" placeholder="Quantity" v-model="quantity" :class="{danger: insufficientQuanitity}">
                 </div>
 
                 <div class="pull-right">
                     <button class="btn btn-success"
                     @click="sellOrder"
-                    :disabled="quantity <= 0 || isNaN(quantity)"
-                    >Sell</button>
+                    :disabled="insufficientQuanitity || quantity <= 0 || isNaN(quantity)"
+                    >{{insufficientQuanitity ? 'Not enough' : 'Sell'}}</button>
                 </div>
             </div>
         </div>
     </div>
 </template>
+
+<style scoped>
+    .danger {
+        border: 1px solid red;
+    }
+</style>
+
 
 <script>
     import { mapActions } from 'vuex'
@@ -33,6 +40,12 @@
         data() {
             return {
                 quantity: 0
+            }
+        },
+
+        computed: {
+            insufficientQuanitity() {
+                return this.stock.quantity <= this.quantity
             }
         },
 

@@ -1,6 +1,6 @@
 <template>
     <div class="col-sm-6 col-md-4">
-        <div class="panel panel-success">
+        <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title">
                     {{ stock.name }}
@@ -15,7 +15,7 @@
 
                 <div class="pull-right">
                     <button class="btn btn-success"
-                    @click="buyStock"
+                    @click="sellOrder"
                     :disabled="quantity <= 0 || isNaN(quantity)"
                     >Sell</button>
                 </div>
@@ -37,17 +37,16 @@
         },
 
         methods: {
-            ...mapActions([
-                'sellStock'
-            ]),
-
-            sellStock() {
+            ...mapActions(['sellStock']),
+            sellOrder() {
                 const order = {
                     stockId: this.stock.id,
                     stockPrice: this.stock.price,
                     quantity: this.quantity
                 }
-                this.sellStock()
+                
+                this.sellStock(order)
+                this.quantity = 0
             }
         }
     }

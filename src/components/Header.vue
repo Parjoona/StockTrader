@@ -21,8 +21,8 @@
             role="button" aria-haspopup="true" 
             aria-expanded="false">Save or Load<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Save</a></li>
-            <li><a href="#">Load</a></li>
+            <li><a href="#" @click="saveData">Save</a></li>
+            <li><a href="#" @click="loadData">Load</a></li>
 
           </ul>
         </li>
@@ -40,7 +40,7 @@
         isDropDownOpen: false
       }
     },
-    
+
     computed: {
       funds() {
         return this.$store.getters.funds
@@ -48,12 +48,27 @@
     },
 
     methods: {
-      ...mapActions([
-        'randomizeStock'
-      ]),
+      ...mapActions({
+        randomizeStock: 'randomizeStock',
+        fetchData: 'loadData'
+      }),
 
       endDay() {
         this.randomizeStock()
+      },
+
+      saveData() {
+        const data = {
+          funds: this.$store.getters.funds,
+          stockPortfolio: this.$store.getters.stockPortfolio,
+          stocks: this.$store.getters.stocks
+        }
+
+        this.$http.put('data.json', data)
+      },
+
+      loadData() {
+        this.fetchData()
       }
     }
   }

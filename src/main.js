@@ -18,6 +18,12 @@ Vue.filter('currency', (value) => {
   return `$${value.toLocaleString()}`
 })
 
+// Vue Resource
+import {secret} from './fakedb/secret'
+import VueResource from 'vue-resource'
+Vue.use(VueResource)
+Vue.http.options.root = secret.adress
+
 new Vue({
   el: '#app',
   router,
